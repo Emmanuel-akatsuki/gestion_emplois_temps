@@ -6,7 +6,7 @@
 </head>
 
 <body>
-
+<jsp:include page="navbar.jsp"/>
 <h2>Liste des Séances</h2>
 
 <table border="1">

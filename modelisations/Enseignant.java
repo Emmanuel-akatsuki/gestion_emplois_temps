@@ -1,3 +1,4 @@
+package modelisations;
 public class Enseignant {
 
     private int idEnseignant;

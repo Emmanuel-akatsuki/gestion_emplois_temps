@@ -1,10 +1,11 @@
-package com.gestionplanning.servlet;
+package servlet;
 
-import com.gestionplanning.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import DAO.*;
+import modelisations.*;
 
 public class SeanceServlet extends HttpServlet {
 

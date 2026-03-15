@@ -1,3 +1,4 @@
+package modelisations;
 import java.sql.Date;
 
 public class Planning {

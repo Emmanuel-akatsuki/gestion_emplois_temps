@@ -1,3 +1,4 @@
+package modelisations;
 public class Salle {
 
     private int idSalle;

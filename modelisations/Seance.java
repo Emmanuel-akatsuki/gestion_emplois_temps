@@ -1,3 +1,4 @@
+package modelisations;
 import java.sql.Time;
 
 public class Seance {

@@ -1,14 +1,14 @@
 <div class="sidebar">
 
-<h2>Planning App</h2>
+    <h2>Planning App</h2>
 
-<a href="dashboard.jsp">Dashboard</a>
-<a href="cours">Cours</a>
-<a href="enseignants">Enseignants</a>
-<a href="salles">Salles</a>
-<a href="etudiants">Etudiants</a>
-<a href="planning">Planning</a>
-<a href="seances">Séances</a>
-<a href="examens">Examens</a>
+    <a href="${pageContext.request.contextPath}/planning">Dashboard</a>
+    <a href="${pageContext.request.contextPath}/cours">Cours</a>
+    <a href="${pageContext.request.contextPath}/enseignants">Enseignants</a>
+    <a href="${pageContext.request.contextPath}/salles">Salles</a>
+    <a href="${pageContext.request.contextPath}/etudiants">Etudiants</a>
+    <a href="${pageContext.request.contextPath}/planning">Planning</a>
+    <a href="${pageContext.request.contextPath}/seances">Séances</a>
+    <a href="${pageContext.request.contextPath}/examens">Examens</a>
 
 </div>

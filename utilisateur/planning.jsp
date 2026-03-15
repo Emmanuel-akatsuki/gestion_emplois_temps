@@ -7,6 +7,7 @@
 </head>
 
 <body>
+<jsp:include page="navbar.jsp"/>
 
 <h2>Liste des Plannings</h2>
 

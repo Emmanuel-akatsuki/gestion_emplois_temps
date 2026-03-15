@@ -7,6 +7,7 @@
 
 <body>
 
+<jsp:include page="navbar.jsp"/>
 <h2>Liste des Salles</h2>
 
 <table border="1">

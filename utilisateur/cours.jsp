@@ -13,7 +13,7 @@
 <body>
 
 <div class="sidebar">
-
+    <jsp:include page="navbar.jsp"/>
 <h2>Planning App</h2>
 
 <a href="dashboard.jsp">Dashboard</a>

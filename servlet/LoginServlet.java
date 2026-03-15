@@ -1,9 +1,10 @@
-package com.gestionplanning.servlet;
+package servlet;
 
-import com.gestionplanning.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import DAO.*;
+import modelisations.*;
 
 public class LoginServlet extends HttpServlet {
 
@@ -13,7 +14,7 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        UtilisateurDAO dao = new UtilisateurDAO();
+        UtilisateursDAO dao = new UtilisateursDAO();
 
         for (Utilisateur u : dao.listerUtilisateurs()) {
 
@@ -27,6 +28,6 @@ public class LoginServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect("login.html");
+        response.sendRedirect("login.jsp");
     }
 }

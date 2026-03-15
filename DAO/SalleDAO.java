@@ -1,14 +1,16 @@
-package com.gestionplanning
+package DAO;
 
-
+import modelisations.Salle;
+import code.DatabaseConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import modelisations.*;
+public class SalleDAO {
 
-public class SallesDAO {
     public void ajouterSalle(Salle salle) {
         String query = "INSERT INTO Salles (nom_salle, capacite, type_salle, batiment) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, salle.getNomSalle());
             stmt.setInt(2, salle.getCapacite());
@@ -23,7 +25,7 @@ public class SallesDAO {
     public List<Salle> listerSalles() {
         List<Salle> sallesList = new ArrayList<>();
         String query = "SELECT * FROM Salles";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -44,17 +46,18 @@ public class SallesDAO {
     public Salle getSalleById(int idSalle) {
         Salle salle = null;
         String query = "SELECT * FROM Salles WHERE id_salle = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, idSalle);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                salle = new Salle();
-                salle.setIdSalle(rs.getInt("id_salle"));
-                salle.setNomSalle(rs.getString("nom_salle"));
-                salle.setCapacite(rs.getInt("capacite"));
-                salle.setTypeSalle(rs.getString("type_salle"));
-                salle.setBatiment(rs.getString("batiment"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    salle = new Salle();
+                    salle.setIdSalle(rs.getInt("id_salle"));
+                    salle.setNomSalle(rs.getString("nom_salle"));
+                    salle.setCapacite(rs.getInt("capacite"));
+                    salle.setTypeSalle(rs.getString("type_salle"));
+                    salle.setBatiment(rs.getString("batiment"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +67,7 @@ public class SallesDAO {
 
     public void updateSalle(Salle salle) {
         String query = "UPDATE Salles SET nom_salle = ?, capacite = ?, type_salle = ?, batiment = ? WHERE id_salle = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, salle.getNomSalle());
             stmt.setInt(2, salle.getCapacite());
@@ -79,12 +82,27 @@ public class SallesDAO {
 
     public void deleteSalle(int idSalle) {
         String query = "DELETE FROM Salles WHERE id_salle = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, idSalle);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int countSalle() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM Salles";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }

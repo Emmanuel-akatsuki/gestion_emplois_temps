@@ -1,18 +1,19 @@
-package com.gestionplanning.servlet;
+package servlet;
 
-import com.gestionplanning.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import DAO.*;
+import modelisations.*;
 
 public class SalleServlet extends HttpServlet {
 
-    private SallesDAO salleDAO;
+    private SalleDAO salleDAO;
 
     @Override
     public void init() {
-        salleDAO = new SallesDAO();
+        salleDAO = new SalleDAO();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

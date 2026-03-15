@@ -6,6 +6,7 @@
 </head>
 
 <body>
+<jsp:include page="navbar.jsp"/>
 
 <h2>Liste des Etudiants</h2>
 

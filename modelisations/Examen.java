@@ -1,3 +1,4 @@
+package modelisations;
 public class Examen {
 
     private int idExamen;

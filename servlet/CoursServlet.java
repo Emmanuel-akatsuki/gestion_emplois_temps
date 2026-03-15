@@ -1,10 +1,11 @@
-package com.gestionplanning.servlet;
+package servlet;
 
-import com.gestionplanning.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import DAO.*;
+import modelisations.*;
 
 public class CoursServlet extends HttpServlet {
 
@@ -38,7 +39,7 @@ public class CoursServlet extends HttpServlet {
         Cours cours = new Cours();
         cours.setIntitule(intitule);
         cours.setCodeMatiere(code);
-        cours.setTypeCours(TypeCours.valueOf(type));
+        cours.setTypeCours(type);
         cours.setCredit(credit);
 
         coursDAO.ajouterCours(cours);

@@ -1,3 +1,4 @@
+package modelisations;
 public class Utilisateur {
 
     private int idUser;

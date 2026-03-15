@@ -1,17 +1,20 @@
-package com.gestionplanning
+package DAO;
 
+import modelisations.Utilisateur;
+import code.DatabaseConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import modelisations.*;
+public class UtilisateursDAO {
 
-public class UtilisateurDAO {
     public void ajouterUtilisateur(Utilisateur utilisateur) {
         String query = "INSERT INTO Utilisateur (login, password_hash, role, actif) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, utilisateur.getLogin());
             stmt.setString(2, utilisateur.getPasswordHash());
-            stmt.setString(3, utilisateur.getRole().name());
+            stmt.setString(3, utilisateur.getRole());
             stmt.setBoolean(4, utilisateur.isActif());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -22,7 +25,7 @@ public class UtilisateurDAO {
     public List<Utilisateur> listerUtilisateurs() {
         List<Utilisateur> utilisateursList = new ArrayList<>();
         String query = "SELECT * FROM Utilisateur";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -30,7 +33,7 @@ public class UtilisateurDAO {
                 utilisateur.setIdUser(rs.getInt("id_user"));
                 utilisateur.setLogin(rs.getString("login"));
                 utilisateur.setPasswordHash(rs.getString("password_hash"));
-                utilisateur.setRole(Role.valueOf(rs.getString("role")));
+                utilisateur.setRole(rs.getString("role"));
                 utilisateur.setActif(rs.getBoolean("actif"));
                 utilisateursList.add(utilisateur);
             }
@@ -43,17 +46,18 @@ public class UtilisateurDAO {
     public Utilisateur getUtilisateurById(int idUser) {
         Utilisateur utilisateur = null;
         String query = "SELECT * FROM Utilisateur WHERE id_user = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, idUser);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                utilisateur = new Utilisateur();
-                utilisateur.setIdUser(rs.getInt("id_user"));
-                utilisateur.setLogin(rs.getString("login"));
-                utilisateur.setPasswordHash(rs.getString("password_hash"));
-                utilisateur.setRole(Role.valueOf(rs.getString("role")));
-                utilisateur.setActif(rs.getBoolean("actif"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    utilisateur = new Utilisateur();
+                    utilisateur.setIdUser(rs.getInt("id_user"));
+                    utilisateur.setLogin(rs.getString("login"));
+                    utilisateur.setPasswordHash(rs.getString("password_hash"));
+                    utilisateur.setRole(rs.getString("role"));
+                    utilisateur.setActif(rs.getBoolean("actif"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,11 +67,11 @@ public class UtilisateurDAO {
 
     public void updateUtilisateur(Utilisateur utilisateur) {
         String query = "UPDATE Utilisateur SET login = ?, password_hash = ?, role = ?, actif = ? WHERE id_user = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, utilisateur.getLogin());
             stmt.setString(2, utilisateur.getPasswordHash());
-            stmt.setString(3, utilisateur.getRole().name());
+            stmt.setString(3, utilisateur.getRole());
             stmt.setBoolean(4, utilisateur.isActif());
             stmt.setInt(5, utilisateur.getIdUser());
             stmt.executeUpdate();
@@ -78,12 +82,27 @@ public class UtilisateurDAO {
 
     public void deleteUtilisateur(int idUser) {
         String query = "DELETE FROM Utilisateur WHERE id_user = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, idUser);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int countUtilisateurs() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM Utilisateur";
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }
