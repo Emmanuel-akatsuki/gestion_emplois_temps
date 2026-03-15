@@ -122,3 +122,11 @@ tree
 ├── lib
 └── web.xml
 
+# procédure d'ouverture
+    - cloner le repo https://github.com/Emmanuel-akatsuki/gestion_emplois_temps.git
+    - ouvrir avec un ide
+    - installé tomcat10 (sudo apt install tomcat10)
+    - cée la base de données ( nom: base, user: utilisateur, password:"12345678") et copier 
+    - le script de la bd présent dans daabase puis le coller dans la création de la base de données
+    - démarré le serveur ( sudo systemctl start tomcat10)
+    - allez sur le navigateur et entrer l'url du projet (http://8000/gestion_emplois_temps)
