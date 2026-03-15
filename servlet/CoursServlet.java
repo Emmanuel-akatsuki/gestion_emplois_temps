@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.List;
 import DAO.CoursDAO;
 import modelisations.Cours;
+import jakarta.servlet.annotation.WebServlet;
 
+@WebServlet("/CoursAction")
 public class CoursServlet extends HttpServlet {
 
     private CoursDAO coursDAO;

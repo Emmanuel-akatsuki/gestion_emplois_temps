@@ -5,7 +5,9 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import DAO.UtilisateursDAO;
 import modelisations.Utilisateur;
+import jakarta.servlet.annotation.WebServlet;
 
+@WebServlet("/LoginAction")
 public class LoginServlet extends HttpServlet {
 
     @Override

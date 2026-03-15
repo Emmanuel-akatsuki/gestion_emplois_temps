@@ -4,7 +4,9 @@ import DAO.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import jakarta.servlet.annotation.WebServlet;
 
+@WebServlet("/PlanningAction")
 public class PlanningServlet extends HttpServlet {
 
     @Override
