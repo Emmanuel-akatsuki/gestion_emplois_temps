@@ -2,11 +2,13 @@ package servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.util.List;
 import DAO.*;
 import modelisations.*;
 
+@WebServlet("/EnseignantAction")
 public class EnseignantServlet extends HttpServlet {
 
     private EnseignantDAO enseignantDAO;
@@ -22,7 +24,7 @@ public class EnseignantServlet extends HttpServlet {
         List<Enseignant> list = enseignantDAO.listerEnseignants();
         request.setAttribute("enseignants", list);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("enseignants.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("utilisateur/enseignants.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -40,6 +42,6 @@ public class EnseignantServlet extends HttpServlet {
 
         enseignantDAO.ajouterEnseignant(e);
 
-        response.sendRedirect("enseignants");
+        response.sendRedirect("EnseignantAction");
     }
 }

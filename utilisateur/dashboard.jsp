@@ -36,7 +36,6 @@
 
     <h2>Application de planning</h2>
 
-    <%-- Liens corrigés pointant vers les Actions du web.xml --%>
     <a href="${pageContext.request.contextPath}/PlanningAction">Dashboard</a>
     <a href="${pageContext.request.contextPath}/CoursAction">Cours</a>
     <a href="${pageContext.request.contextPath}/EnseignantAction">Enseignants</a>
