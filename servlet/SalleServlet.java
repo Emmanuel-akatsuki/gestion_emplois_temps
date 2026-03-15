@@ -4,8 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
-import DAO.*;
-import modelisations.*;
+import DAO.SalleDAO;
+import modelisations.Salle;
 
 public class SalleServlet extends HttpServlet {
 
@@ -16,21 +16,23 @@ public class SalleServlet extends HttpServlet {
         salleDAO = new SalleDAO();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         List<Salle> salles = salleDAO.listerSalles();
+
         request.setAttribute("salles", salles);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("salles.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("utilisateur/salles.jsp");
         dispatcher.forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         Salle salle = new Salle();
-
         salle.setNomSalle(request.getParameter("nom_salle"));
         salle.setCapacite(Integer.parseInt(request.getParameter("capacite")));
         salle.setTypeSalle(request.getParameter("type_salle"));
@@ -38,6 +40,6 @@ public class SalleServlet extends HttpServlet {
 
         salleDAO.ajouterSalle(salle);
 
-        response.sendRedirect("salles");
+        response.sendRedirect(request.getContextPath() + "/SalleAction");
     }
 }

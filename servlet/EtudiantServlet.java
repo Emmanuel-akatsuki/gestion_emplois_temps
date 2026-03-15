@@ -4,8 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
-import DAO.*;
-import modelisations.*;
+import DAO.EtudiantDAO;
+import modelisations.Etudiant;
 
 public class EtudiantServlet extends HttpServlet {
 
@@ -16,21 +16,23 @@ public class EtudiantServlet extends HttpServlet {
         etudiantDAO = new EtudiantDAO();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Etudiant> etudiants = etudiantDAO.listerEtudiants();
-        request.setAttribute("etudiants", etudiants);
+        List<Etudiant> list = etudiantDAO.listerEtudiants();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("etudiants.jsp");
+        request.setAttribute("etudiants", list);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("utilisateur/etudiants.jsp");
         dispatcher.forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         Etudiant e = new Etudiant();
-
         e.setMatricule(request.getParameter("matricule"));
         e.setNom(request.getParameter("nom"));
         e.setPrenom(request.getParameter("prenom"));
@@ -39,6 +41,6 @@ public class EtudiantServlet extends HttpServlet {
 
         etudiantDAO.ajouterEtudiant(e);
 
-        response.sendRedirect("etudiants");
+        response.sendRedirect(request.getContextPath() + "/EtudiantAction");
     }
 }

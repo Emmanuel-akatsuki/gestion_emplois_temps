@@ -37,8 +37,8 @@ public class RegisterServlet extends HttpServlet {
             ps.setString(3, role);
 
             ps.executeUpdate();
+            response.sendRedirect(request.getContextPath() + "/utilisateur/login.jsp");
 
-            response.sendRedirect("utilisateur/login.jsp");
 
         }catch(Exception e){
 

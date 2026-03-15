@@ -98,7 +98,7 @@
 
     <h2>Connexion</h2>
 
-    <form action="../login" method="post">
+    <form action="${pageContext.request.contextPath}/LoginAction" method="post">
 
     <div class="input-group">
 

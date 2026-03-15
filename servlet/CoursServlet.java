@@ -4,8 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
-import DAO.*;
-import modelisations.*;
+import DAO.CoursDAO;
+import modelisations.Cours;
 
 public class CoursServlet extends HttpServlet {
 
@@ -23,7 +23,7 @@ public class CoursServlet extends HttpServlet {
         List<Cours> coursList = coursDAO.listerCours();
         request.setAttribute("coursList", coursList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("cours.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("utilisateur/cours.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -34,16 +34,23 @@ public class CoursServlet extends HttpServlet {
         String intitule = request.getParameter("intitule");
         String code = request.getParameter("code_matiere");
         String type = request.getParameter("type_cours");
-        int credit = Integer.parseInt(request.getParameter("credit"));
+
+        String volume = request.getParameter("volume_horaire");
+
+        int credit = 0;
+        try {
+            credit = Integer.parseInt(request.getParameter("credit"));
+        } catch (NumberFormatException e) { e.printStackTrace(); }
 
         Cours cours = new Cours();
         cours.setIntitule(intitule);
         cours.setCodeMatiere(code);
         cours.setTypeCours(type);
+        cours.setVolumeHoraire(volume != null ? volume : "00:00:00");
         cours.setCredit(credit);
 
         coursDAO.ajouterCours(cours);
 
-        response.sendRedirect("cours");
+        response.sendRedirect(request.getContextPath() + "/CoursAction");
     }
 }

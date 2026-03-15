@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -79,7 +80,7 @@ margin-top:10px;
 
 <h2>Créer un compte</h2>
 
-<form action="../Register" method="post">
+<form action="${pageContext.request.contextPath}/RegisterAction" method="post">
 
 <input type="text" name="login" placeholder="Login" required>
 

@@ -1,9 +1,5 @@
 package servlet;
 
-import DAO.CoursDAO;
-import DAO.EnseignantDAO;
-import DAO.EtudiantDAO;
-import DAO.SalleDAO;
 import DAO.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -11,26 +7,21 @@ import java.io.IOException;
 
 public class PlanningServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int nbCours = CoursDAO.countCours();
-        int nbEnseignants = EnseignantDAO.countEnseignants();
-        int nbSalles = SalleDAO.countSalle();
-        int nbEtudiants = EtudiantDAO.countEtudiants();
-        int nbExamen = ExamenDAO.countExamen();
-        int nbUtilisateurs = UtilisateursDAO.countUtilisateurs();
+        request.setAttribute("cours", CoursDAO.countCours());
+        request.setAttribute("enseignants", EnseignantDAO.countEnseignants());
+        request.setAttribute("salles", SalleDAO.countSalle());
+        request.setAttribute("etudiants", EtudiantDAO.countEtudiants());
+        request.setAttribute("examen", ExamenDAO.countExamen());
 
-        request.setAttribute("cours", nbCours);
-        request.setAttribute("enseignants", nbEnseignants);
-        request.setAttribute("salles", nbSalles);
-        request.setAttribute("etudiants", nbEtudiants);
-        request.setAttribute("examen", nbExamen);
-        request.setAttribute("utilisateurs", nbUtilisateurs);
+        request.setAttribute("cm", 10);
+        request.setAttribute("td", 5);
+        request.setAttribute("tp", 3);
 
-        RequestDispatcher dispatcher =
-                request.getRequestDispatcher("utilisateur/dashboard.jsp");
-
-        dispatcher.forward(request,response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("utilisateur/dashboard.jsp");
+        dispatcher.forward(request, response);
     }
 }

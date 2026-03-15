@@ -4,8 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
-import DAO.*;
-import modelisations.*;
+import DAO.ExamenDAO;
+import modelisations.Examen;
 
 public class ExamenServlet extends HttpServlet {
 
@@ -16,13 +16,16 @@ public class ExamenServlet extends HttpServlet {
         examenDAO = new ExamenDAO();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         List<Examen> examens = examenDAO.listerExamens();
+
         request.setAttribute("examens", examens);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("examens.jsp");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("utilisateur/examens.jsp");
         dispatcher.forward(request, response);
     }
 }

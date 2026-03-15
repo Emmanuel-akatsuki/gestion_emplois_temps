@@ -3,11 +3,12 @@ package servlet;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import DAO.*;
-import modelisations.*;
+import DAO.UtilisateursDAO;
+import modelisations.Utilisateur;
 
 public class LoginServlet extends HttpServlet {
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -17,17 +18,15 @@ public class LoginServlet extends HttpServlet {
         UtilisateursDAO dao = new UtilisateursDAO();
 
         for (Utilisateur u : dao.listerUtilisateurs()) {
-
             if (u.getLogin().equals(login) && u.getPasswordHash().equals(password)) {
-
                 HttpSession session = request.getSession();
                 session.setAttribute("user", u);
 
-                response.sendRedirect("dashboard.jsp");
+                response.sendRedirect(request.getContextPath() + "/PlanningAction");
                 return;
             }
         }
 
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("utilisateur/login.jsp?error=1");
     }
 }
